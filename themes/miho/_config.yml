@@ -1,0 +1,87 @@
+# hexo-theme-miho
+# https://github.com/wongminho/hexo-theme-miho
+
+# Favicon of your site | 网站icon
+favicon: /favicon.ico
+
+# Header
+
+# Keywords of your site | 网站关键字
+keywords: 
+# Head headline | 头部标题
+header_title: 
+# Head description | 头部描述
+header_description: 为了联盟
+# Link to your logo | logo地址
+logo: images/logo.png
+# Link to your banner_img | 首页banner图地址
+banner_img: images/banner.jpg
+
+menu:
+  home:
+    title: 主页
+    url: /
+    target: false
+  archive:
+    title: 归档
+    url: /archives
+    target: false
+  user:
+    title: 关于
+    url: /about
+    target: false
+
+# Content
+
+# Excerpt length | 摘录长度
+excerpt_length: 180
+# Excerpt link | 摘录链接
+excerpt_link: 更多>>
+# New window open link | 新窗口打开文章
+open_new_link: false
+# Article default cover picture，size：350*150 | 文章默认封面图，尺寸：350*150
+cover_picture: images/banner.jpg
+# Open background particles | 开启背景粒子
+open_bg_particle: true
+# Open animation in homepage and head | 开启主页及头部动画
+open_animation: true
+
+# Open toc | 是否开启toc
+toc: true
+# Open share | 是否开启分享
+share: false
+
+# Reward | 打赏
+
+reward:
+  # 0-close, 1-All articles are rewarding, 2-Article's md file has reward:true attribute, only reward
+  # 0-关闭, 1-所有文章均有打赏, 2-文章的md文件里有reward:true属性，才有打赏
+  status: 0
+  # 标题
+  title: 请我吃糖~
+  # 微信，关闭设为 false
+  wechat: images/wechat_code.jpg
+  # 支付宝，关闭设为 false
+  alipay: images/alipay_code.jpg
+
+# Comments | 评论
+
+# 畅言，输入appid和appkey
+changyan_appid: false
+changyan_appkey: false
+# 友言，输入id
+youyan_id: false
+# disqus
+disqus: false
+# gitment  https://github.com/imsun/gitment
+gitment:
+  owner: false   #你的 GitHub ID
+  repo: ''   #存储评论的 repo
+  client_id: '' #client ID
+  client_secret: ''  #client secret
+
+# Access statistics | “不蒜子”访问量统计
+access_counter:
+  on: false
+  site_uv: 总访客数：
+  site_pv: 总访问量：
