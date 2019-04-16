@@ -7,11 +7,11 @@ favicon: /favicon.ico
 # Header
 
 # Keywords of your site | 网站关键字
-keywords: 
+keywords: 网络记事本
 # Head headline | 头部标题
-header_title: 
+header_title: 联盟
 # Head description | 头部描述
-header_description: 为了联盟
+header_description: 希尔瓦娜斯·风行者
 # Link to your logo | logo地址
 logo: images/logo.png
 # Link to your banner_img | 首页banner图地址
@@ -34,9 +34,9 @@ menu:
 # Content
 
 # Excerpt length | 摘录长度
-excerpt_length: 180
+excerpt_length: 300
 # Excerpt link | 摘录链接
-excerpt_link: 更多>>
+excerpt_link: 更多 >>
 # New window open link | 新窗口打开文章
 open_new_link: false
 # Article default cover picture，size：350*150 | 文章默认封面图，尺寸：350*150
