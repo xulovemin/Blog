@@ -1,6 +1,6 @@
 ---
 title: Hello Word
-cover_picture: images/banner.jpg
+# cover_picture: images/banner.jpg
 categories: First
 tags:
     - Movies

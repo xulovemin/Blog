@@ -1,6 +1,5 @@
 ---
 title: hllow2
-cover_picture: images/back.jpg
 date: 2019-04-16 18:14:23
 categories: Second
 tags:
