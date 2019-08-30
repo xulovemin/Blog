@@ -25,3 +25,20 @@ elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/
 ``` cmd
 exit
 ```
+
+## 安装mysql数据库
+* docker-compose.yml文件配置
+``` cmd
+version: "3"
+services:
+  mysql: 
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    container_name: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - D:/db/mysql/data:/var/lib/mysql
+```

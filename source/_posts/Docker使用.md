@@ -9,47 +9,41 @@ tags:
 
 ## dockerfile文件
 
-### Python版本
-
+* Python版本
 ``` cmd
 FROM python:3.6
 WORKDIR /usr/src/modelclassify
-ADD . /usr/src/modelclassify
-RUN pip install --no-cache-dir -i https://mirrors.aliyun.com/pypi/simple/ -r /usr/src/modelclassify/requirements.txt
+ADD . .
+RUN pip install --no-cache-dir -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
 EXPOSE 5000
 CMD uwsgi Named_entity_recognition_uwsgi.ini
 ```
-
-### Java版本
-
+* Java版本
 ``` cmd
 FROM java:8
 WORKDIR /usr/src/wordCount
-COPY . /usr/src/wordCount
+ADD . .
 EXPOSE 8080
 CMD java -jar app.jar
 ```
-
-### docker build 后面的 **.** 是重点
-
+* docker build 后面的 **.** 是重点
 ``` cmd
 docker build -t jc/ner:v1.0 .
 ```
-
-### docker run
-
+* docker run
 ``` cmd
-docker run (-d后台启动) -p 5000(外部访问):80(内部暴露) jc/ner:版本号
+docker run -d(后台启动) -p 5000(外部访问):80(内部暴露) jc/ner:版本号
 ```
 
 ### docker-compose 管理多个容器
 
 * 安装 
 ``` cmd
-pip install docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
 ```
 * 新建docker-compose.yml文件及配置
-
 ``` cmd
 version: "3"
 services:
@@ -60,11 +54,37 @@ services:
   region:
     .....
 ```
-
 * 命令
-
 ``` cmd
 docker-compose up (-d)
 docker-compose down
 docker-compose ps
+```
+
+## docker常用命令
+* 镜像类
+``` cmd
+docker build --rm=true . 构建镜像
+docker pull ${IMAGE} 安装镜像
+docker images 显示已经安装的镜像
+docker images --no-trunc 显示已经安装镜像的详细内容
+docker rmi ${IMAGE_ID} 删除指定镜像
+docker rmi $(docker images | grep "^" | awk "{print $3}") 删除所有没有标签的镜像
+docker rmi -f $(docker images | awk "/^<none>/ { print $3 }") 删除所有是none的dockers镜像
+docker rmi $(docker images --quiet --filter &quot;dangling=true&quot;) 删除未使用的镜像
+```
+* 容器类
+``` cmd
+docker run 运行容器
+docker ps 显示正在运行的容器
+docker ps -a 显示所有的容器
+docker stop ${CID} 停止指定容器
+docker ps -a --filter &quot;exited=1&quot; 显示所有退出状态为1的容器
+docker rm ${CID} 删除指定容器
+docker ps -a | grep wildfly | awk '{print $1}' | xargs docker rm -f 使用正则表达式删除容器
+docker stop docker ps -q 停止所有正在运行的容器
+docker rm $(docker ps -aq) 删除所有停止的容器
+docker rm -f $(docker ps -a | grep Exit | awk '{ print $1 }') 删除所有退出的容器
+docker exec -it ${CID} /bin/sh 进入容器打开一个shell
+docker ps | grep wildfly | awk "{print $1}" 通过正则表达式查找容器的镜像ID
 ```
