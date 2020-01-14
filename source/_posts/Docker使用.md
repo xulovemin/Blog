@@ -7,8 +7,36 @@ tags:
     - 部署
 ---
 
-## dockerfile文件
+### docker 安装目录修改
+- 软连接方式
+```cmd
+systemctl start docker
+systemctl stop docker
+cd /var/lib
+cp –rf docker /data
+rm –rf docker
+ln –s /data/docker docker
+```
+- 镜像导入导出
+```cmd
+docker save nginx > nginx.tar
+docker load < nginx.tar
+```
+- 默认配置文件
 
+- usr/lib/systemd/system/docker.service
+
+- 如果更改存储目录就添加
+
+- -- graph=/opt/docker
+
+- 如果更改 DNS 
+
+- 默认采用宿主机的 dns
+
+- -- dns=xxxx 的方式指定
+
+### dockerfile 文件
 * Python版本
 ``` cmd
 FROM python:3.6
@@ -35,8 +63,7 @@ docker build -t jc/ner:v1.0 .
 docker run -d(后台启动) -p 5000(外部访问):80(内部暴露) jc/ner:版本号
 ```
 
-### docker-compose 管理多个容器
-
+### docker-compose 单机容器编排
 * 安装 
 ``` cmd
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -61,7 +88,7 @@ docker-compose down
 docker-compose ps
 ```
 
-## docker常用命令
+### docker 常用命令
 * 镜像类
 ``` cmd
 docker build --rm=true . 构建镜像

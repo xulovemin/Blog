@@ -6,7 +6,7 @@ tags:
     - docker
     - 集群
 ---
-## Swarm安装
+### Swarm安装
 * 两台机器
 * 初始化集群
 ``` cmd
@@ -37,7 +37,7 @@ docker node update --availability drain NODE-ID
 docker service scale nginx=3
 ```
 
-## docker web管理工具
+### docker web管理工具
 * 下载protainer镜像
 ``` cmd
 docker pull portainer/portainer
@@ -45,4 +45,14 @@ docker pull portainer/portainer
 * 启动镜像
 ``` cmd
 docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v /data/portainer:/data portainer/portainer
+```
+
+### docker集群运行查看工具
+- 下载visualizer镜像
+```cmd
+docker pull dockersamples/visualizer
+```
+- 启动镜像
+```cmd
+docker run -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock dockersamples/visualizer
 ```
