@@ -1,7 +1,7 @@
 ---
 title: rancher搭建
 date: 2019-10-25 09:06:23
-categories: 技术帖
+categories: 运维
 tags:
     - docker编排
     - 集群搭建
