@@ -74,42 +74,30 @@ services:
 - 可以用git存储流程代码，方便
 - 前面配置一样，流程在下面的代码里面
 
-```groovy
+```cmd
 pipeline {
-    # 指定系统的agent
-    agent any 
-    # 参数配置，可在运行之前指定值
-    parameters {
-        string(name: 'BRANCH', defaultValue: 'master', description: 'branch description')
-    }
-    # 设置环境值，共当前逻辑等使用
-    environment {
-        ENVIRONMENT_FLAG = "${params.BRANCH}"
+    # 指定机器运行，可选any、label、docker等
+    agent {
+        label 'master'
     }
     stages {
-        # 将docker与maven加入到环境变量，使其命令可以使用
-        stage('Init'){
-            steps{
-                script{
-                   def dockerPath = tool 'docker'
-                   env.PATH = "${dockerPath}/bin:${env.PATH}"
-                   def mavenPath = tool 'maven'
-                   env.PATH = "${mavenPath}/bin:${env.PATH}"
-                }
-            }
-        }
-        # 拉取git代码，可以在运行时指定分支
+        # 拉取git代码，根据分支不同建立不同的任务，到时候各自分支提交会自动出发相应的构建流程
         stage('Git Pullling') {
             steps {
-                git branch: "${params.BRANCH}", credentialsId: 'xulovemin', url: 'https://github.com/xulovemin/demo.git'
+                git branch: 'develop', credentialsId: 'xulovemin', url: 'https://github.com/xulovemin/demo.git'
             }
         }
         stage('Maven Build') {
+            # 使用系统设置中安装的工具
+            tools {
+                maven 'maven'
+            }
             steps {
-                sh 'mvn package'
+                sh 'mvn clean package'
             }
         }
         stage('Docker Build') {
+            # 系统运行起来自动带docker环境
             steps {
                 sh 'docker build -t localhost:8070/library/demo .'
                 sh 'docker push localhost:8070/library/demo'
@@ -117,14 +105,12 @@ pipeline {
         }
         stage('Deployment') {
             # 远程ssh服务器，需要下载SSH Pipeline Steps这个插件
+            # 不同的构建环境ssh不同的主机
             steps {
                 script {
                     def remote = [:]
                     remote.name = 'server'
-                    if (ENVIRONMENT_FLAG == 'master') {
-                        print(ENVIRONMENT_FLAG)
-                        remote.host = 'xulovemin1413.xyz'
-                    }
+                    remote.host = 'xulovemin1413.xyz'
                     remote.user = 'root'
                     remote.password = 'Lixu1989'
                     remote.port = 22
