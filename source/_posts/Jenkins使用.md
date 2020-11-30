@@ -93,7 +93,7 @@ pipeline {
                 maven 'maven'
             }
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean package -Dmaven.test.skip'
             }
         }
         stage('Docker Build') {
@@ -131,3 +131,9 @@ pipeline {
 - 查看Blue Ocean流程图
 
 ![](./blue.jpg)
+
+- 用户权限配置（安装Role-based Authorization Strategy）这个插件
+
+![](./role1.jpg)
+![](./role2.jpg)
+![](./role3.jpg)
