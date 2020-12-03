@@ -128,6 +128,48 @@ pipeline {
 }
 ```
 
+- 自动部署Vue流程
+
+```cmd
+pipeline {
+    agent {
+        label 'master'
+    }
+    stages {
+        stage('Git Pullling') {
+            steps {
+                git branch: 'master', credentialsId: 'xulovemin', url: 'https://github.com/xulovemin/demovue.git'
+            }
+        }
+        stage('Node Build') {
+            tools {
+                nodejs 'node'
+            }
+            steps {
+                sh 'npm install'
+                sh 'rm -rf ./dist/*'
+                sh 'npm run build'
+            }
+        }
+        stage('Deployment') {
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = 'server'
+                    remote.host = 'xulovemin1413.xyz'
+                    remote.user = 'root'
+                    remote.password = 'Lixu1989'
+                    remote.port = 22
+                    remote.allowAnyHosts = true
+                    sshCommand remote: remote, command: 'rm -rf /work/nginx/dist/*'
+                    sshPut remote: remote, from: 'dist', into: '/work/nginx'
+                }
+            }
+        }
+    }
+}
+```
+
 - 查看Blue Ocean流程图
 
 ![](./blue.jpg)
