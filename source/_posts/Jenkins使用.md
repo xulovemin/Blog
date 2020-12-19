@@ -16,6 +16,8 @@ services:
   jenkins:
     container_name: jenkins
     image: jenkinsci/blueocean
+    # 指定docker用户
+    user: root
     ports:
       - 8090:8080
     volumes:

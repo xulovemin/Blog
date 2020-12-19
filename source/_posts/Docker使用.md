@@ -7,6 +7,14 @@ tags:
     - 部署
 ---
 
+### 阿里源安装docker
+- yum安装
+```cmd
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum makecache fast
+yum -y install docker-ce
+```
+
 ### docker 安装目录修改
 - 软连接方式
 ```cmd
@@ -96,7 +104,7 @@ docker pull ${IMAGE} 安装镜像
 docker images 显示已经安装的镜像
 docker images --no-trunc 显示已经安装镜像的详细内容
 docker rmi ${IMAGE_ID} 删除指定镜像
-docker rmi $(docker images | grep "^" | awk "{print $3}") 删除所有没有标签的镜像
+docker rmi -f $(docker images | grep none | awk '{print $3}' | xargs)
 docker rmi -f $(docker images | awk "/^<none>/ { print $3 }") 删除所有是none的dockers镜像
 docker rmi $(docker images --quiet --filter &quot;dangling=true&quot;) 删除未使用的镜像
 ```
