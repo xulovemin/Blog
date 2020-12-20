@@ -46,6 +46,18 @@ server {
     }
 }
 ```
+* nginx配置stream,新版本功能，可以代理TCP协议，可以负载MySQL、oracle等
+```cmd
+stream{
+	upstream mysql{
+		server mysql:3306;
+	}
+	server{
+		listen 3306;
+		proxy_pass mysql;
+	}
+}
+```
 
 * nginx支持高并发，放到服务前面缓解压力
 
