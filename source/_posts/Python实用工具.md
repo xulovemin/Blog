@@ -45,3 +45,58 @@ you-get -i url
 ```cmd
 you-get --json url
 ```
+
+* py注册到nacos给springcloud调用
+```python
+from flask import Flask
+import nacos
+from apscheduler.schedulers.background import BackgroundScheduler
+from flask_restful import Resource, fields, marshal_with, Api
+
+app = Flask(__name__)
+api = Api(app)
+
+# 后台定时任务
+scheduler = BackgroundScheduler()
+
+SERVER_ADDRESSES = "localhost:8848"
+
+na_client = nacos.NacosClient(SERVER_ADDRESSES)
+#注册到nacos
+na_client.add_naming_instance('py', 'localhost', 5000)
+
+@scheduler.scheduled_job('cron', second='*/5')
+def send_heartbeat():
+    na_client.send_heartbeat('py', 'localhost', 5000)
+
+#定时5秒向nacos发送心跳
+scheduler.start()
+
+class Index(Resource):
+    @marshal_with(i_filed)
+    def get(self):
+        return {'data': ''}
+
+
+api.add_resource(Index, '/')
+
+app.run()
+```
+
+* springcloud项目配置fegin调用
+```java
+package com.example.service;
+
+import com.example.vo.Result;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@FeignClient(value = "py", fallback = PyInterFaceImpl.class)
+public interface PyInterFace {
+
+    @GetMapping("/")
+    Result top();
+
+}
+
+```
