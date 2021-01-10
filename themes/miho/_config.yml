@@ -7,7 +7,7 @@ favicon: /favicon.ico
 # Header
 
 # Keywords of your site | 网站关键字
-keywords: 网络记事本
+keywords:
 # Head headline | 头部标题
 header_title: 艾泽拉斯
 # Head description | 头部描述
@@ -34,7 +34,7 @@ menu:
 # Content
 
 # Excerpt length | 摘录长度
-excerpt_length: 80
+excerpt_length: 100
 # Excerpt link | 摘录链接
 excerpt_link: 更多 >>
 # New window open link | 新窗口打开文章
