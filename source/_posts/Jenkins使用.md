@@ -24,6 +24,8 @@ services:
       - /data/jenkins:/var/jenkins_home
       # 这个很重要，可以让Jenkins容器里面使用docker
       - /var/run/docker.sock:/var/run/docker.sock 
+      # 以让Jenkins容器里面使用docker-compose
+      - /usr/local/bin/docker-compose:/usr/local/bin/docker-compose
 ```
 
 ### jenkins系统管理配置
