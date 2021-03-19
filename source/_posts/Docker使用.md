@@ -15,6 +15,43 @@ yum makecache fast
 yum -y install docker-ce
 ```
 
+### 二进制安装
+- 安装
+```cmd
+tar -xvf docker-17.03.0-ce.tgz
+cp docker/* /usr/local/bin
+vim /etc/systemd/system/docker.service
+``` 
+- service内容
+```cmd
+[Unit]
+Description=Docker Application Container Engine
+Documentation=http://docs.docker.io
+[Service]
+Environment="PATH=/usr/local/bin:/bin:/sbin:/usr/bin:/usr/sbin"
+EnvironmentFile=-/run/flannel/docker
+ExecStart=/usr/local/bin/dockerd --log-level=error $DOCKER_NETWORK_OPTIONS
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+Delegate=yes
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+```
+- 执行命令
+```cmd
+systemctl daemon-reload   //重载systemd下 xxx.service文件
+systemctl status docker
+systemctl start docker    //启动Docker
+systemctl enable docker.service   //设置开机自启
+```
+
+
 ### docker 安装目录修改
 - 软连接方式
 ```cmd
