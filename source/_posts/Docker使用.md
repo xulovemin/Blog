@@ -21,18 +21,14 @@ yum -y install docker-ce
 tar -xvf docker-17.03.0-ce.tgz
 cp docker/* /usr/local/bin
 vim /etc/systemd/system/docker.service
-``` 
-- service内容
-```cmd
+
 [Unit]
 Description=Docker Application Container Engine
 Documentation=http://docs.docker.io
 [Service]
-Environment="PATH=/usr/local/bin:/bin:/sbin:/usr/bin:/usr/sbin"
-EnvironmentFile=-/run/flannel/docker
-ExecStart=/usr/local/bin/dockerd --log-level=error $DOCKER_NETWORK_OPTIONS
+ExecStart=/usr/local/bin/dockerd
 ExecReload=/bin/kill -s HUP $MAINPID
-Restart=on-failure
+Restart=always
 RestartSec=5
 LimitNOFILE=infinity
 LimitNPROC=infinity
