@@ -208,6 +208,11 @@ deployment:
 ```cmd
 /spark/sbin/start-thriftserver.sh --master spark://spark-master:7077
 ```
+* spark启动history
+
+```cmd
+/spark/sbin/start-history-server.sh hdfs://namenode:9000/history
+```
 * flink配置完spark-default和sql-client配置就可以使用flink-sql了
 
 ```cmd
